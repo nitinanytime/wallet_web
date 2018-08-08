@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="template">
+    <!--<img src="assets/img/ewallet2.gif"  style="zoom: 0.4;"/>-->
+    <h1>Wallet [ {{w_object.w_type}} : Balance- {{w_object.current_balance}}]</h1>
+  </div>
+
+  <div class="transactionlist">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Txn ID</th>
+        <th>Amount</th>
+        <th>Txn Type</th>
+        <th>Status</th>
+        <th>Action Date / Time</th>
+        <th>Closing Balance</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let transaction of transactions; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ transaction.txn_uid }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td>{{ transaction.txn_type }}</td>
+        <td>{{ transaction.status }}</td>
+        <td>{{ transaction.modified_date | date:'MM/dd/yyyy / h:mma' }}</td>
+
+        <td>{{ transaction.closing_balance }}</td>
+        <td>
+          <button type="button" class="btn btn-danger" (click)="onDelete(i, transaction.txn_uid)">Cancel</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="text-right">
+      <button type="submit" class="btn btn-primary" (click)="onNew()">New</button>
+    </div>
+  </div>
+  <br>
+  <div class="regentry" *ngIf="showNew">
+    <form (ngSubmit)="onSave()">
+      <div class="form-group row">
+        <label for="firstname-input" class="col-2 col-form-label">Amount</label>
+        <div class="col-10">
+          <input class="form-control" type="number" [(ngModel)]="txnModel.amount" name="firstName">
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label for="city-input" class="col-2 col-form-label">Transaction type</label>
+        <div class="col-10 dropdown" ngbDropdown myDrop="ngbDropdown">
+          <button type="button" class="btn btn-outline-primary" id="dropdownManual" name="txn_type" ngbDropdownToggle>{{txnModel.txn_type}}</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownManual">
+            <button type="button" class="dropdown-item" *ngFor="let txn_type of txn_types" (click)="onChangeWalletType(txn_type)">{{txn_type}}</button>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success">Add Transaction</button>
+      <button type="submit" class="btn btn-primary" (click)="onCancel()">Cancel</button>
+    </form>
+  </div>
+
+
+</div>
