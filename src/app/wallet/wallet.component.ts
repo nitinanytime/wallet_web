@@ -87,7 +87,7 @@ export class WalletComponent implements OnInit {
   // This method associate to Delete Button.
   onDelete(index: number, txn_uid : string) {
     // Delete the corresponding registration entry from the list.
-    this.walletService.cancelTransaction(txn_uid)
+    this.walletService.cancelTransaction(txn_uid, this.c_cuid)
       .subscribe(result_data => {
         if (result_data['success'] === 0) {
           alert(result_data['message']);

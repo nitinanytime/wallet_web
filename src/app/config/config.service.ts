@@ -10,19 +10,19 @@ export class WalletService {
   url_base = 'http://127.0.0.1:8000/api/';
 
   add_customer(data_model): Observable<any> {
-    return this.http.post(this.url_base + 'get_wallet?format=json', data_model);
+    return this.http.post(this.url_base + 'customers?format=json', data_model);
   }
   getRegistrations(): Observable<any> {
-    return this.http.get(this.url_base + 'get_registrations?format=json');
+    return this.http.get(this.url_base + 'customers?format=json');
   }
   addTransaction(txn_model): Observable<any> {
-    return this.http.post(this.url_base + 'create_transaction?format=json', txn_model);
+    return this.http.post(this.url_base + 'customers/transactions/create?format=json', txn_model);
   }
   getTransaction(c_uid): Observable<any> {
-    return this.http.get(this.url_base + 'get_all_transaction?c_uid=' + c_uid + '&format=json');
+    return this.http.get(this.url_base + 'customers/' + c_uid + '/transactions?format=json');
   }
-  cancelTransaction(txn_uid): Observable<any> {
-    return this.http.get(this.url_base + 'cancel_transaction?txn_uid=' + txn_uid + '&format=json');
+  cancelTransaction(txn_uid, c_uid): Observable<any> {
+    return this.http.get(this.url_base + 'customers/'+c_uid+'/transactions/' + txn_uid + '/cancel?format=json');
   }
   private extractData(res: Response) {
     const body = res.json();
